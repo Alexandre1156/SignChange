@@ -1,0 +1,16 @@
+[
+{
+  "modid": "signchange",
+  "name": "Sign Change",
+  "description": "Mod that add the ability to change or create a new sign with more complexe options.",
+  "version": "1.0.0",
+  "mcversion": "1.12.1",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Nocturne123"],
+  "credits": "Nocturne123",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

@@ -1,0 +1,10 @@
+{
+  "homepage": "http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/wip-mods/2828921-mushpowers",
+  "1.12.1": {
+    "0.1.0": "Initial release"
+  },
+  "promos": {
+    "1.12.1-latest": "1.0.0",
+    "1.12.1-recommended": "1.0.0"
+  }
+}
