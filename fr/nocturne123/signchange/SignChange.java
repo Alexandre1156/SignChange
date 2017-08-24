@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-@Mod(modid = Reference.MOD_ID, version = Reference.VERSION, acceptedMinecraftVersions = "1.12", clientSideOnly = true, name = Reference.MOD_NAME)
+@Mod(modid = Reference.MOD_ID, version = Reference.VERSION, acceptedMinecraftVersions = "1.12", clientSideOnly = true, name = Reference.MOD_NAME, updateJSON = "https://raw.githubusercontent.com/Alexandre1156/SignChange/master/Update.json")
 public class SignChange {
     
 	@Instance(Reference.MOD_ID)
