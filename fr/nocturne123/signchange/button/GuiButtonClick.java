@@ -22,14 +22,14 @@ public class GuiButtonClick extends GuiButtonIcon {
 		this.leftClick = new Runnable() {
 			@Override
 			public void run() {
-				Minecraft.func_71410_x().func_147108_a(new GuiClick(GuiButtonClick.this, (GuiSignChange) Minecraft.func_71410_x().field_71462_r));
+				Minecraft.getMinecraft().displayGuiScreen(new GuiClick(GuiButtonClick.this, (GuiSignChange) Minecraft.getMinecraft().currentScreen));
 			}
 		};
 	}
 	
 	@Override
-	public boolean func_146116_c(Minecraft mc, int mouseX, int mouseY) {
-		return this.field_146124_l && this.field_146125_m && mouseX >= this.field_146128_h && mouseY >= this.field_146129_i && mouseX < this.field_146128_h + this.field_146120_f && mouseY < this.field_146129_i + this.field_146121_g;
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+		return this.enabled && this.visible && mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
 	}
 		
 	public ClickEvent getOnClick() {

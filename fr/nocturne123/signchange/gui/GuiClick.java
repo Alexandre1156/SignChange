@@ -27,51 +27,51 @@ public class GuiClick extends GuiScreen {
 	}
 	
 	@Override
-	public void func_73866_w_() {
+	public void initGui() {
 		//this.addButton(new GuiButtonClicked(0, this.width / 3 - 200, this.height / 4, "Open URL", clickBut.getOnClick() != null && clickBut.getOnClick().getAction() == Action.OPEN_URL));
-		GuiButtonClicked but = this.func_189646_b(new GuiButtonClicked(1, this.field_146294_l / 3 + 5, this.field_146295_m / 4, "Run command", true));
+		GuiButtonClicked but = this.addButton(new GuiButtonClicked(1, this.width / 3 + 5, this.height / 4, "Run command", true));
 		but.setBlocked(true);
 		//this.addButton(new GuiButtonClicked(2, this.width / 3 + 210, this.height / 4, "Suggest command", clickBut.getOnClick() != null && clickBut.getOnClick().getAction() == Action.SUGGEST_COMMAND));
-		this.func_189646_b(new GuiButton(3, this.field_146294_l / 2 - 100, this.field_146295_m - 50, "Save"));
-		this.textField = new GuiTextField(4, field_146289_q, this.field_146294_l / 2 - 100, this.field_146295_m / 4 * 2, 200, 20);
-		this.textField.func_146205_d(false);
-		this.textField.func_146195_b(true);
-		this.textField.func_146180_a(clickBut.getOnClick() != null ? clickBut.getOnClick().func_150668_b() : "");
+		this.addButton(new GuiButton(3, this.width / 2 - 100, this.height - 50, "Save"));
+		this.textField = new GuiTextField(4, fontRenderer, this.width / 2 - 100, this.height / 4 * 2, 200, 20);
+		this.textField.setCanLoseFocus(false);
+		this.textField.setFocused(true);
+		this.textField.setText(clickBut.getOnClick() != null ? clickBut.getOnClick().getValue() : "");
 		Keyboard.enableRepeatEvents(true);
 	}
 	
 	@Override
-	protected void func_73869_a(char typedChar, int keyCode) throws IOException {
-		this.textField.func_146201_a(typedChar, keyCode);
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		this.textField.textboxKeyTyped(typedChar, keyCode);
 		if(keyCode == 1) {
-			Minecraft.func_71410_x().func_147108_a(guiSign);
+			Minecraft.getMinecraft().displayGuiScreen(guiSign);
 			clickBut.setOnClick(clickBut.getOnClick() != null ? clickBut.getOnClick() : null);
 		}
 	}
 	
 	@Override
-	protected void func_73864_a(int mouseX, int mouseY, int mouseButton) throws IOException {
-		this.textField.func_146192_a(mouseX, mouseY, mouseButton);
-		super.func_73864_a(mouseX, mouseY, mouseButton);
+	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
+		this.textField.mouseClicked(mouseX, mouseY, mouseButton);
+		super.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 	
 	@Override
-	public void func_73876_c() {
-		this.textField.func_146178_a();
+	public void updateScreen() {
+		this.textField.updateCursorCounter();
 	}
 	
 	@Override
-	public void func_73863_a(int mouseX, int mouseY, float partialTicks) {
-		this.func_146276_q_();
-		super.func_73863_a(mouseX, mouseY, partialTicks);
-		this.textField.func_146194_f();
-		this.func_73732_a(field_146289_q, TextFormatting.BOLD+"When player right click on the sign...", this.field_146294_l / 2, this.field_146295_m / 4 - 20, Color.white.getRGB());
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.textField.drawTextBox();
+		this.drawCenteredString(fontRenderer, TextFormatting.BOLD+"When player right click on the sign...", this.width / 2, this.height / 4 - 20, Color.white.getRGB());
 	}
 	
 	@Override
-	protected void func_146284_a(GuiButton button) throws IOException {
-		if(button.field_146124_l) {
-			switch(button.field_146127_k) {
+	protected void actionPerformed(GuiButton button) throws IOException {
+		if(button.enabled) {
+			switch(button.id) {
 //			case 0:
 //			case 1:
 //			case 2:
@@ -79,12 +79,12 @@ public class GuiClick extends GuiScreen {
 //				break;
 			case 3:
 //				Action action = this.getActionByButtonActived();
-				String value = this.textField.func_146179_b();
+				String value = this.textField.getText();
 				if(/*action != null && */value != null && !value.isEmpty())
-					this.clickBut.setOnClick(new ClickEvent(Action.RUN_COMMAND, this.textField.func_146179_b()));
+					this.clickBut.setOnClick(new ClickEvent(Action.RUN_COMMAND, this.textField.getText()));
 				else
 					this.clickBut.setOnClick(null);
-				Minecraft.func_71410_x().func_147108_a(guiSign);
+				Minecraft.getMinecraft().displayGuiScreen(guiSign);
 				Keyboard.enableRepeatEvents(false);
 				break;
 			}

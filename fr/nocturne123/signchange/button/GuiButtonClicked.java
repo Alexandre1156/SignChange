@@ -23,16 +23,16 @@ public class GuiButtonClicked extends GuiButton {
 	}
 	
 	@Override
-	public boolean func_146116_c(Minecraft mc, int mouseX, int mouseY) {
-		if(this.func_146115_a() && !blocked) 
+	public boolean mousePressed(Minecraft mc, int mouseX, int mouseY) {
+		if(this.isMouseOver() && !blocked) 
 			this.clicked = !this.clicked;
-		return super.func_146116_c(mc, mouseX, mouseY);
+		return super.mousePressed(mc, mouseX, mouseY);
 	}
 	
 	@Override
-	protected int func_146114_a(boolean mouseOver) {
+	protected int getHoverState(boolean mouseOver) {
 		int i = 1;
-        if (!this.field_146124_l)
+        if (!this.enabled)
             i = 0;
         else if (mouseOver || clicked)
             i = 2;
@@ -44,8 +44,8 @@ public class GuiButtonClicked extends GuiButton {
 	}
 	
 	public void setPosition(int x, int y) {
-		this.field_146128_h = x;
-		this.field_146129_i = y;
+		this.x = x;
+		this.y = y;
 	}
 
 }

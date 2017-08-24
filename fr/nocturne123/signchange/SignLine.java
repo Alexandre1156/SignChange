@@ -34,31 +34,31 @@ public class SignLine extends Gui {
 	public SignLine(int id, int x, int y, int screenWidth, int screenHeight, ITextComponent text, int position) {
 		this.x = x;
 		this.y = y;
-		this.mc = Minecraft.func_71410_x();
+		this.mc = Minecraft.getMinecraft();
 		this.width = screenWidth;
 		this.height = screenHeight;
-		this.style = text.func_150256_b();
+		this.style = text.getStyle();
 		this.text = text;
 		this.position = position;
 		
 		if(style != null) {
-			this.bold = style.func_150223_b();
-			this.italic = style.func_150242_c();
-			this.obfuscated = style.func_150233_f();
-			this.underlined = style.func_150234_e();
-			this.strikethrough = style.func_150236_d();
-			this.format = style.func_150215_a() != null ? style.func_150215_a() : TextFormatting.BLACK;
-			this.click = style.func_150235_h();
+			this.bold = style.getBold();
+			this.italic = style.getItalic();
+			this.obfuscated = style.getObfuscated();
+			this.underlined = style.getUnderlined();
+			this.strikethrough = style.getStrikethrough();
+			this.format = style.getColor() != null ? style.getColor() : TextFormatting.BLACK;
+			this.click = style.getClickEvent();
 		} else {
 			this.format = TextFormatting.WHITE;
 			this.style = new Style();
 		}
 		
-		this.textField = new GuiTextField(id, mc.field_71466_p, x - 100, y, 200, 20);
-		this.textField.func_146205_d(true);
-		this.textField.func_146195_b(false);
-		this.textField.func_146203_f(32);
-		this.textField.func_146180_a(text == null ? "" : text.func_150260_c());
+		this.textField = new GuiTextField(id, mc.fontRenderer, x - 100, y, 200, 20);
+		this.textField.setCanLoseFocus(true);
+		this.textField.setFocused(false);
+		this.textField.setMaxStringLength(32);
+		this.textField.setText(text == null ? "" : text.getUnformattedText());
 		this.colorBut = new GuiButtonColor(5 + id, x - 130, y, format);
 		this.boldBut = new GuiButtonIcon(9 + id, x - 155, y, 'B', this.bold);
 		this.italicBut = new GuiButtonIcon(13 + id, x - 180, y, 'I', this.italic);
@@ -71,9 +71,9 @@ public class SignLine extends Gui {
 	
 	public String getNBTComponent() {
 		String text = "";
-		text = "Text"+this.position+":\"{\\\"text\\\":\\\""+this.textField.func_146179_b()+"\\\"";
+		text = "Text"+this.position+":\"{\\\"text\\\":\\\""+this.textField.getText()+"\\\"";
 		if(this.colorBut.getColor() != TextFormatting.BLACK)
-			text += ",\\\"color\\\":\\\""+this.colorBut.getColor().func_96297_d()+"\\\"";
+			text += ",\\\"color\\\":\\\""+this.colorBut.getColor().getFriendlyName()+"\\\"";
 		if(this.bold)
 			text += ",\\\"bold\\\":\\\"true\\\"";
 		if(this.italic)
@@ -84,8 +84,8 @@ public class SignLine extends Gui {
 			text += ",\\\"strikethrough\\\":\\\"true\\\"";
 		if(this.underlined)
 			text += ",\\\"underlined\\\":\\\"true\\\"";
-		if(this.click != null && this.click.func_150669_a() != null && this.click.func_150668_b() != null && !this.click.func_150668_b().isEmpty())
-			text += ",\\\"clickEvent\\\":{\\\"action\\\":\\\""+this.click.func_150669_a().func_150673_b()+"\\\",\\\"value\\\":\\\""+this.click.func_150668_b()+"\\\"}";
+		if(this.click != null && this.click.getAction() != null && this.click.getValue() != null && !this.click.getValue().isEmpty())
+			text += ",\\\"clickEvent\\\":{\\\"action\\\":\\\""+this.click.getAction().getCanonicalName()+"\\\",\\\"value\\\":\\\""+this.click.getValue()+"\\\"}";
 		text += "}\"";
 		return text;
 	}
@@ -95,22 +95,22 @@ public class SignLine extends Gui {
 	}
 	
 	public String getUnformattedText() {
-		return this.textField.func_146179_b();
+		return this.textField.getText();
 	}
 	
 	public String getFormattedText() {
-		return this.getTextComponent().func_150254_d();
+		return this.getTextComponent().getFormattedText();
 	}
 	
 	public ITextComponent getTextComponent() {
-		return new TextComponentString(this.textField.func_146179_b()).func_150255_a(this.style);
+		return new TextComponentString(this.textField.getText()).setStyle(this.style);
 	}
 	
 	public void setPosition(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.textField.field_146209_f = x - 100;
-		this.textField.field_146210_g = y;
+		this.textField.x = x - 100;
+		this.textField.y = y;
 		if(x - 255 < 0) {
 			int newX = (x - 100) / 7;
 			this.colorBut.setPosition(x - 130, y);
@@ -132,7 +132,7 @@ public class SignLine extends Gui {
 	}
 	
 	public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
-		this.textField.func_146192_a(mouseX, mouseY, mouseButton);
+		this.textField.mouseClicked(mouseX, mouseY, mouseButton);
 		this.boldBut.mouseClicked(mc, mouseX, mouseY, mouseButton);
 		this.italicBut.mouseClicked(mc, mouseX, mouseY, mouseButton);
 		this.obfBut.mouseClicked(mc, mouseX, mouseY, mouseButton);
@@ -143,33 +143,33 @@ public class SignLine extends Gui {
 	}
 	
 	public void updateStyle() {
-		this.style.func_150227_a(this.bold = this.boldBut.isClicked());
-		this.style.func_150238_a(this.format = this.colorBut.getColor());
-		this.style.func_150217_b(this.italic = this.italicBut.isClicked());
-		this.style.func_150237_e(this.obfuscated = this.obfBut.isClicked());
-		this.style.func_150225_c(this.strikethrough = this.strikeBut.isClicked());
-		this.style.func_150228_d(this.underlined = this.linedBut.isClicked());
-		this.style.func_150241_a(this.click = this.clickBut.getOnClick());
+		this.style.setBold(this.bold = this.boldBut.isClicked());
+		this.style.setColor(this.format = this.colorBut.getColor());
+		this.style.setItalic(this.italic = this.italicBut.isClicked());
+		this.style.setObfuscated(this.obfuscated = this.obfBut.isClicked());
+		this.style.setStrikethrough(this.strikethrough = this.strikeBut.isClicked());
+		this.style.setUnderlined(this.underlined = this.linedBut.isClicked());
+		this.style.setClickEvent(this.click = this.clickBut.getOnClick());
 	}
 	
 	public void updateCursorCounter() {
-		this.textField.func_146178_a();
+		this.textField.updateCursorCounter();
 	}
 	
 	public void textboxKeyTyped(char typedChar, int keyCode) {
-		this.textField.func_146201_a(typedChar, keyCode);
+		this.textField.textboxKeyTyped(typedChar, keyCode);
 	}
 	
 	public void drawTextBox() {
-		this.textField.func_146194_f();
+		this.textField.drawTextBox();
 	}
 	
 	public void setFocused(boolean value) {
-		this.textField.func_146195_b(value);
+		this.textField.setFocused(value);
 	}
 	
 	public boolean isFocused() {
-		return this.textField.func_146206_l();
+		return this.textField.isFocused();
 	}
 	
 	public ArrayList<GuiButton> getButtons() {

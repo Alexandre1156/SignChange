@@ -11,7 +11,7 @@ public class GuiButtonIcon extends GuiButtonClicked {
 	}
 	
 	public boolean mouseClicked(Minecraft mc, int mouseX, int mouseY, int mouseButton) {
-		if(this.func_146115_a()) {
+		if(this.isMouseOver()) {
 			switch(mouseButton) {
 			case 0: //Left click
 				if(this.leftClick != null)
