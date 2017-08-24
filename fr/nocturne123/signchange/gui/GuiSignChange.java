@@ -106,7 +106,7 @@ public class GuiSignChange extends GuiScreen {
 		
 		GlStateManager.color(1f, 1f, 1f);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(signTexture);
-		this.drawModalRectWithCustomSizedTexture(this.width / 2 - 49, this.height / 4 - 41, 0, 0, 128, 128, 128, 128);
+		this.drawModalRectWithCustomSizedTexture(this.width / 2 - 49, this.height / 4 - 41, 0, 0, 512, 512, 512, 512);
 		
 		for(int i = 0; i <= 3; i++) {
 			SignLine textField = this.lines[i];
