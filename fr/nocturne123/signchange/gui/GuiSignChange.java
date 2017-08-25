@@ -67,17 +67,16 @@ public class GuiSignChange extends GuiScreen {
 				if(this.isNew) {
 					for(int i = 0; i <= 3; i++) 
 						this.te.signText[i] = this.lines[i].getTextComponent();
-				} else {
-					String text1 = this.lines[0].getNBTComponent();
-					String text2 = this.lines[1].getNBTComponent();
-					String text3 = this.lines[2].getNBTComponent();
-					String text4 = this.lines[3].getNBTComponent();
-					BlockPos signPos = this.te.getPos();
-					SignChange.blockBlockUpdateMessage = 4;
-					for(int i = 0; i <= 3; i++)
-						this.mc.player.sendChatMessage("/blockdata "+signPos.getX()+" "+signPos.getY()+" "+signPos.getZ()+" {"
-								+this.lines[i].getNBTComponent()+"}");
 				}
+				String text1 = this.lines[0].getNBTComponent();
+				String text2 = this.lines[1].getNBTComponent();
+				String text3 = this.lines[2].getNBTComponent();
+				String text4 = this.lines[3].getNBTComponent();
+				BlockPos signPos = this.te.getPos();
+				SignChange.blockBlockUpdateMessage = 4;
+				for(int i = 0; i <= 3; i++)
+					this.mc.player.sendChatMessage("/blockdata "+signPos.getX()+" "+signPos.getY()+" "+signPos.getZ()+" {"
+							+this.lines[i].getNBTComponent()+"}");
 				this.mc.displayGuiScreen(null);
 				break;
 			}
