@@ -64,15 +64,20 @@ public class GuiSignChange extends GuiScreen {
 		if (button.enabled) {
 			switch (button.id) {
 			case 4:
-				String text1 = this.lines[0].getNBTComponent();
-				String text2 = this.lines[1].getNBTComponent();
-				String text3 = this.lines[2].getNBTComponent();
-				String text4 = this.lines[3].getNBTComponent();
-				BlockPos signPos = this.te.getPos();
-				SignChange.blockBlockUpdateMessage = 4;
-				for(int i = 0; i <= 3; i++)
-					this.mc.player.sendChatMessage("/blockdata "+signPos.getX()+" "+signPos.getY()+" "+signPos.getZ()+" {"
-							+this.lines[i].getNBTComponent()+"}");
+				if(this.isNew) {
+					for(int i = 0; i <= 3; i++) 
+						this.te.signText[i] = this.lines[i].getTextComponent();
+				} else {
+					String text1 = this.lines[0].getNBTComponent();
+					String text2 = this.lines[1].getNBTComponent();
+					String text3 = this.lines[2].getNBTComponent();
+					String text4 = this.lines[3].getNBTComponent();
+					BlockPos signPos = this.te.getPos();
+					SignChange.blockBlockUpdateMessage = 4;
+					for(int i = 0; i <= 3; i++)
+						this.mc.player.sendChatMessage("/blockdata "+signPos.getX()+" "+signPos.getY()+" "+signPos.getZ()+" {"
+								+this.lines[i].getNBTComponent()+"}");
+				}
 				this.mc.displayGuiScreen(null);
 				break;
 			}
@@ -83,14 +88,13 @@ public class GuiSignChange extends GuiScreen {
 	public void onGuiClosed() {
 		Keyboard.enableRepeatEvents(false);
 		this.te.setEditable(true);
-		
 		if(this.isNew) {
 			for(int i = 0; i <= 3; i++) {
 				if(te.signText[i] == null)
 					this.te.signText[i] = new TextComponentString("");
 			}
 			NetHandlerPlayClient nethandlerplayclient = this.mc.getConnection();
-			if (nethandlerplayclient != null)
+			if (nethandlerplayclient != null) 
 				nethandlerplayclient.sendPacket(new CPacketUpdateSign(this.te.getPos(), this.te.signText));
 		}
 	}

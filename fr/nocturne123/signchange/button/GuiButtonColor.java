@@ -58,7 +58,7 @@ public class GuiButtonColor extends GuiButton {
 	
 	public void onRightClick() {
 		if(this.isMouseOver()) {
-			this.color = TextFormatting.WHITE;
+			this.color = TextFormatting.BLACK;
 			this.colorChar = ObfuscationReflectionHelper.getPrivateValue(TextFormatting.class, color, 25);
 			int color = Minecraft.getMinecraft().fontRenderer.getColorCode(this.colorChar);
 			float f = (float)(color >> 16 & 255) / 255.0F;
