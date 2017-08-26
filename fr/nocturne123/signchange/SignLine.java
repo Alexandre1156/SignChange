@@ -63,7 +63,7 @@ public class SignLine extends Gui {
 		this.boldBut = new GuiButtonIcon(9 + id, x - 155, y, 'B', this.bold);
 		this.italicBut = new GuiButtonIcon(13 + id, x - 180, y, 'I', this.italic);
 		this.obfBut = new GuiButtonIcon(17 + id, x - 205, y, 'O', this.obfuscated);
-		this.linedBut = new GuiButtonIcon(21 + id, x - 230, y, 'L', this.underlined);
+		this.linedBut = new GuiButtonIcon(21 + id, x - 230, y, 'U', this.underlined);
 		this.strikeBut = new GuiButtonIcon(25 + id, x - 255, y, 'S', this.strikethrough);
 		this.clickBut = new GuiButtonClick(29 + id, x + 110, y, 'C', this.click);
 		this.setPosition(x, y);

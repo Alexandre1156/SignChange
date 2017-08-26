@@ -156,6 +156,7 @@ public class GuiSignChange extends GuiScreen {
 		}
 		for (SignLine textField : this.lines)
 			textField.textboxKeyTyped(typedChar, keyCode);
+		super.keyTyped(typedChar, keyCode);
 	}
 
 	@Override
